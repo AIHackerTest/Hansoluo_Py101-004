@@ -1,0 +1,6 @@
+{% extends "home.html" %}
+{% block content %}
+  {% for i in user_data %}
+    <p><h4 class = "pos_rel">{{i[0]}}, {{i[1]}} 天气 {{i[2]}}, 温度 {{i[3]}}~{{i[4]}}度, 风向{{i[5]}}</b></p>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,68 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Website</title>
+      <style>
+
+        body{
+            /*text-align: center;*/
+            background-image:url({{ url_for('static', filename = 'FreshSalt.jpg') }})
+            }
+        h1,h3,h4{
+             font-family: 'Microsoft YaHei', cursive;
+             font-weight: normal;
+             color: #FFFFFF;
+             }
+        h1.pos_abs{
+                position:absolute;
+                left:100px;
+                top:100px
+                }
+        h3.pos_abs{
+                position:absolute;
+                left:100px;
+                top:200px
+                }
+        h4.pos_rel{
+                position:relative;
+                left:90px;
+                top:300px
+                }
+        </style>
+    </head>
+    <body>
+      <h1 class = "pos_abs">天气查询系统</h1>
+        <!-- <img src= {{ url_for('static', filename = '002.png') }} alt="天气图片" width="200", height="300" > -->
+        <form action="/query" method="post">
+          <h3 class = "pos_abs"> 城市:<input type="text" name="city">
+              <input type="submit" name="action" value="查询">
+              <input type="submit" name="action" value="历史">
+              <input type="submit" name="action" value="帮助">
+          </h3>
+        </form>
+        <div>
+          {% if a %}
+              <h4 class = "pos_rel">{{a[0][0]}}, {{a[0][1]}} 天气 {{a[0][2]}}, 温度 {{a[0][3]}}~{{a[0][4]}}度, 风向{{a[0][5]}}<br>
+                                   更新时间：{{a[0][6]}}</h4>
+          {% endif %}
+
+          {% if help_info %}
+              <h4 class = "pos_rel">输入城市名，查询该城市的天气；<br>
+                                    输入 help，打印帮助文档；<br>
+                                    输入 history，获取查询历史。</h4>
+          {% endif %}
+
+          {% for i in history %}
+            <p><h4 class = "pos_rel">{{i[0]}}, {{i[1]}} 天气 {{i[2]}}, 温度 {{i[3]}}~{{i[4]}}度, 风向{{i[5]}}</b></p>
+          {% endfor %}
+
+          {% if error %}
+          <h4 class = "pos_rel">查询不到您输入的城市天气，请检查拼写或按帮助键</h4>
+          {% endif %}
+        </div>
+        <div>
+        {% block content %}{% endblock %}
+        </div>
+    </body>
+  </html>
